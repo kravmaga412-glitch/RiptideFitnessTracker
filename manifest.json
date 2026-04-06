@@ -1,0 +1,21 @@
+{
+  "name": "Riptide Fight & Fitness",
+  "short_name": "Riptide",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ffff",
+  "description": "Riptide Fight & Fitness training app",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
