@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete Account — Riptide Fight & Fitness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --neon: #00e5ff;
+      --neon-dim: rgba(0, 229, 255, 0.12);
+      --red: #ff3b5c;
+      --red-dim: rgba(255, 59, 92, 0.1);
+      --text: #e0e0e8;
+      --muted: #666680;
+    }
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      overflow-x: hidden;
+    }
+ 
+    /* Animated background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+ 
+    /* Wave accent top */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      z-index: 10;
+    }
+ 
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+    }
+ 
+    /* Logo / Brand */
+    .brand {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.6s ease both;
+    }
+ 
+    .brand-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      letter-spacing: 0.12em;
+      color: var(--neon);
+      text-shadow: 0 0 20px rgba(0,229,255,0.4);
+      line-height: 1;
+    }
+ 
+    .brand-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+ 
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2.5rem 2rem;
+      animation: fadeUp 0.6s 0.15s ease both;
+    }
+ 
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .warning-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--red-dim);
+      border: 1px solid rgba(255,59,92,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+ 
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      line-height: 1;
+    }
+ 
+    .card-title span {
+      color: var(--red);
+    }
+ 
+    /* Info blocks */
+    .info-block {
+      background: var(--neon-dim);
+      border-left: 2px solid var(--neon);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+ 
+    .info-block strong {
+      color: var(--neon);
+      font-weight: 500;
+    }
+ 
+    .what-gets-deleted {
+      margin-bottom: 1.75rem;
+    }
+ 
+    .what-gets-deleted h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+ 
+    .delete-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+ 
+    .delete-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+ 
+    .delete-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+ 
+    /* Form */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+ 
+    label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+ 
+    input[type="email"],
+    textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+ 
+    input[type="email"]:focus,
+    textarea:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 0 2px rgba(0,229,255,0.08);
+    }
+ 
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+ 
+    .confirm-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      cursor: pointer;
+    }
+ 
+    .confirm-check input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: var(--red);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+ 
+    .confirm-check span {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+ 
+    .confirm-check span strong {
+      color: var(--red);
+    }
+ 
+    .btn-delete {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      padding: 0.9rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .btn-delete:hover:not(:disabled) {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(255,59,92,0.3);
+    }
+ 
+    .btn-delete:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+ 
+    /* Success state */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+ 
+    .success-state.visible {
+      display: block;
+      animation: fadeUp 0.4s ease both;
+    }
+ 
+    .success-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+ 
+    .success-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: var(--neon);
+      margin-bottom: 0.75rem;
+    }
+ 
+    .success-body {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+ 
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+ 
+    .footer a {
+      color: var(--neon);
+      text-decoration: none;
+    }
+ 
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+ 
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+ 
+<div class="container">
+ 
+  <div class="brand">
+    <div class="brand-logo">RIPTIDE</div>
+    <div class="brand-sub">Fight &amp; Fitness</div>
+  </div>
+ 
+  <div class="card">
+ 
+    <div class="card-header">
+      <div class="warning-icon">⚠️</div>
+      <div class="card-title">DELETE <span>ACCOUNT</span></div>
+    </div>
+ 
+    <div class="info-block">
+      <strong>Processing time:</strong> Account deletion requests are processed within <strong>30 days</strong>. You will receive a confirmation email once your data has been permanently removed.
+    </div>
+ 
+    <div class="what-gets-deleted">
+      <h3>What will be deleted</h3>
+      <ul class="delete-list">
+        <li>Your account and login credentials</li>
+        <li>All workout and training logs</li>
+        <li>Nutrition and meal tracking data</li>
+        <li>Personal journal entries</li>
+        <li>Body stats and progress history</li>
+      </ul>
+    </div>
+ 
+    <div id="formSection">
+      <div class="form-group">
+        <label for="email">Account Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" />
+      </div>
+ 
+      <div class="form-group">
+        <label for="reason">Reason for leaving (optional)</label>
+        <textarea id="reason" placeholder="Help us improve..."></textarea>
+      </div>
+ 
+      <label class="confirm-check">
+        <input type="checkbox" id="confirm" />
+        <span>I understand this action is <strong>permanent and irreversible</strong>. All my data will be deleted and cannot be recovered.</span>
+      </label>
+ 
+      <button class="btn-delete" id="submitBtn" disabled onclick="handleSubmit()">
+        PERMANENTLY DELETE MY ACCOUNT
+      </button>
+    </div>
+ 
+    <div class="success-state" id="successState">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Request Received</div>
+      <div class="success-body">
+        We've received your deletion request and will process it within 30 days.<br/><br/>
+        A confirmation will be sent to your email address. Thank you for being part of the Riptide community.
+      </div>
+    </div>
+ 
+  </div>
+ 
+  <div class="footer">
+    Questions? Contact us at <a href="mailto:support@riptideff.com">support@riptideff.com</a><br/>
+    &copy; 2024 Riptide Fight &amp; Fitness, LLC
+  </div>
+ 
+</div>
+ 
+<script>
+  const confirmBox = document.getElementById('confirm');
+  const emailInput = document.getElementById('email');
+  const submitBtn  = document.getElementById('submitBtn');
+ 
+  function checkReady() {
+    submitBtn.disabled = !(confirmBox.checked && emailInput.value.trim().length > 4);
+  }
+ 
+  confirmBox.addEventListener('change', checkReady);
+  emailInput.addEventListener('input', checkReady);
+ 
+  function handleSubmit() {
+    const email  = emailInput.value.trim();
+    const reason = document.getElementById('reason').value.trim();
+ 
+    // Build mailto link so request lands in your inbox
+    const subject = encodeURIComponent('Account Deletion Request');
+    const body    = encodeURIComponent(
+      `Account deletion request\n\nEmail: ${email}\n\nReason: ${reason || 'Not provided'}\n\nTimestamp: ${new Date().toISOString()}`
+    );
+ 
+    window.location.href = `mailto:support@riptideff.com?subject=${subject}&body=${body}`;
+ 
+    // Show success state
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('successState').classList.add('visible');
+  }
+</script>
+ 
+</body>
+</html>
